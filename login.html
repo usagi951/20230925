@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+
+<body>
+    <form id="loginForm">
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button type="button" onclick="login()">Login</button>
+    </form>
+
+    <div id="userInfo">
+        <!-- 顯示用戶資料的區域 -->
+    </div>
+    
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6">
+                <img src="images/05.jpg" class="w-25" alt="">
+            </div>
+            <div class="col-md-6">
+                <div class="">
+                    <label for="ID" class="form-label">編號：</label>
+                    <input type="text" class="form-control" id="ID" disabled>
+                </div>
+                <div class="">
+                    <label for="nickname" class="form-label">暱稱：</label>
+                    <input type="text" class="form-control" id="nickname" disabled>
+                </div>
+                <div class="">
+                    <label for="email" class="form-label">Email：</label>
+                    <input type="text" class="form-control" id="email" disabled>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <form action="upload.php" method="post" enctype="multipart/form-data">
+        <!-- File input field here -->
+        <input type="file" name="file">
+        <!-- Submit button -->
+        <input type="submit" value="Upload">
+    </form>
+    
+
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-3.7.0.min.js"></script>
+    <script>
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // 使用AJAX或其他方式向後端發送登入請求
+            // 這裡假設後端返回的用戶資料是一個包含姓名的對象
+            // 實際情況中，你需要適應你的後端返回結構
+            // 這只是示例代碼
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // 將用戶資料顯示在網頁上
+                    const userInfo = document.getElementById('userInfo');
+                    userInfo.innerHTML = `Welcome, ${data.name}!`;
+                })
+                .catch(error => {
+                    console.error('Login failed:', error);
+                });
+        }
+        const express = require('express');
+        const app = express();
+        const port = 3000;
+
+        app.use(express.json());
+
+        // 模擬一個假的用戶數據庫
+        const users = [
+            { username: 'user1', password: 'password1', name: 'User One' },
+            { username: 'user2', password: 'password2', name: 'User Two' },
+        ];
+
+        app.post('/login', (req, res) => {
+            const { username, password } = req.body;
+
+            // 在這裡進行用戶驗證，實際上應連接到真實的用戶數據庫
+            const user = users.find(u => u.username === username && u.password === password);
+
+            if (user) {
+                res.json({ name: user.name });
+            } else {
+                res.status(401).json({ error: 'Authentication failed' });
+            }
+        });
+
+        app.listen(port, () => {
+            console.log(`Server is listening at http://localhost:${port}`);
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人資料</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/my.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <Style>
+        .box {
+            height: 50px;
+            width: 50px;
+            display: inline-block;
+        }
+
+        .demo {
+            background-color: aquamarine;
+        }
+
+        .box2 {
+            height: 50px;
+            width: 50px;
+            display: inline-block;
+            background-color: #000;
+        }
+
+        .demo2 {
+            width: 300px;
+            height: 250px;
+            border: 1px solid #000;
+        }
+    </Style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <img src="images/05.jpg" alt="" class="w-25">
+        </div>
+        <div class="row justify-content-center my-3">
+            <div class="col-auto">
+                <label for="">名稱</label>
+            </div>
+            <div class="col-auto ">
+                <input type="text" class="form-control" id="name" name="name" disabled>
+            </div>
+        </div>
+
+        <div class="row justify-content-center my-3">
+            <div class="col-auto">
+                <label for="">帳號</label>
+            </div>
+            <div class="col-auto ">
+                <input type="text" class="form-control" id="username" name="username" disabled>
+            </div>
+        </div>
+
+        <div class="row justify-content-center my-3">
+            <div class="col-auto">
+                <label for="">密碼</label>
+            </div>
+            <div class="col-auto ">
+                <input type="text" class="form-control" id="password" name="password" disabled >
+            </div>
+        </div>
+
+        <div class="row justify-content-center my-3">
+            <div class="col-auto">
+                <label for="">e-mail</label>
+            </div>
+            <div class="col-auto ">
+                <input type="text" class="form-control" id="email" name="email" disabled>
+            </div>
+        </div>
+
+        <div class="row justify-content-center my-3">
+            <div class="col-auto">
+                <label for="">性別</label>
+            </div>
+            <div class="col-auto ">
+                <input type="text" class="form-control" id="gender" name="gender" disabled>
+            </div>
+        </div>
+
+        <button id="change" class="btn btn-primary">變更資料</button>
+
+
+    </div>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-3.7.0.min.js"></script>
+    <script>
+        
+        $(function () {
+            console.log(getCookie('id'));
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "api/member_r.php",
+                data: {
+                    id: getCookie('id')
+                },
+                success: show_member,
+                error: function () {
+                    alert("error-api/member_r.php");
+                }
+            })
+            $("#change").click(function(){
+                 $("#gender").prop("disabled",false);
+                 $("#email").prop("disabled",false);
+                 $("#username").prop("disabled",false);
+                 $("#name").prop("disabled",false);
+            });
+        });
+        function show_member(data) {
+            console.log(data.data[i].Email);
+            var email
+            var gender
+            if(data.data.Gender=="f"){
+                gender="女"
+            }else{
+                gender="男"
+            }
+            $("#gender").prop("value",gender);
+            $("#email").prop("value",data.data.Email);
+            $("#username").prop("value",data.data.Username);
+            $("#name").prop("value",data.data[i].Nickname);
+        }
+
+        //import w3
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+    </script>
+
+</body>
+
+
+</html>

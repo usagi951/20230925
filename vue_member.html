@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue redomuser</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/my.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/animate.css_4.1.1_animate.min.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>email</th>
+                                <th>照片</th>
+                                <th>姓名</th>
+                                <th>城市</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(item, key) in userdata">
+                                <td>{{ item.email }}</td>
+                                <td><img :src="item.picture.large" alt="" class="img-fluid"></td>
+                                <td>{{ item.name.title }} {{ item.name.first }} {{ item.name.last }}</td>
+                                <td>{{ item.location.city }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-3.7.0.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const App = {
+            data() {
+                return {
+                    test: 'hi!',
+                    userdata: [],
+
+                }
+            },
+            created() {
+                const vm = this;
+                $.ajax({
+                    url: 'https://randomuser.me/api/?results=20',
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data);
+                        vm.userdata = data.results;
+                    }
+                });
+            }
+        }
+        Vue.createApp(App).mount('#app');
+    </script>
+</body>
+
+</html>

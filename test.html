@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/my.css">
+</head>
+
+<body>
+    <div class="container my-5">
+        <div class="row justify-content-center d-flex flex-column">
+            <h3 class="mb-3 text-center">個人資料</h3>
+            <div class="col-md-4 offset-4 text-center">
+                <div class="my-3">
+                    <img src="#" alt="" id="previmg" class="d-none w-100 mb-3">
+                    <label for="fileupload" class="form-label">頭像更換</label>
+                    <input type="file" class="form-control" id="fileupload" name="fileupload">
+                </div>
+                <a href="#" class="btn btn-info mt-3" id="upload_btn">確定上傳</a>
+            </div>
+            <div class="col-md-5 offset-4">
+                <div id="mem_table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>ID:</td>
+                                <td>001</td>
+                            </tr>
+                            <tr>
+                                <td>Nickname:</td>
+                                <td>555</td>
+                            </tr>
+                            <tr>
+                                <td>Username:</td>
+                                <td>owner555</td>
+                            </tr>
+                            <tr>
+                                <td>Email:</td>
+                                <td>test@gmail.com</td>
+                            </tr>
+                            <tr>
+                                <td>Created_at:</td>
+                                <td>xxxxx</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><a href="#" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#updateModal" data-id="' + data.data[0].ID + '"data-username="' + data.data[0].Username + '"data-nickname="' + data.data[0].Nickname + '"data-Email="' + data.data[0].Email + '"id="update_btn">更新</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
